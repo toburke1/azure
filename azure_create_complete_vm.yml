@@ -9,14 +9,14 @@
   - name: Create virtual network
     azure_rm_virtualnetwork:
       resource_group: MyResourceGroup
-      name: myVnet
+      name: MyVnet
       address_prefixes: "10.0.0.0/16"
   - name: Add subnet
     azure_rm_subnet:
       resource_group: myResourceGroup
       name: mySubnet
       address_prefix: "10.0.1.0/24"
-      virtual_network: myVnet
+      virtual_network: MyVnet
   - name: Create public IP address
     azure_rm_publicipaddress:
       resource_group: MyResourceGroup
