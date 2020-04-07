@@ -4,32 +4,32 @@
   tasks:
   - name: Create resource group
     azure_rm_resourcegroup:
-      name: MyResourceGroup
+      name: MyResourceGroup2
       location: westus
   - name: Create virtual network
     azure_rm_virtualnetwork:
-      resource_group: MyResourceGroup
-      name: MyVnet
+      resource_group: MyResourceGroup2
+      name: MyVnet2
       address_prefixes: "10.0.0.0/16"
   - name: Add subnet
     azure_rm_subnet:
-      resource_group: myResourceGroup
-      name: mySubnet
+      resource_group: myResourceGroup2
+      name: MySubnet2
       address_prefix: "10.0.1.0/24"
-      virtual_network: MyVnet
+      virtual_network: MyVnet2
   - name: Create public IP address
     azure_rm_publicipaddress:
-      resource_group: MyResourceGroup
+      resource_group: MyResourceGroup2
       allocation_method: Static
-      name: myPublicIP
+      name: MyPublicIP2
     register: output_ip_address
   - name: Dump public IP for VM which will be created
     debug:
       msg: "The public IP is {{ output_ip_address.state.ip_address }}."
   - name: Create Network Security Group that allows SSH
     azure_rm_securitygroup:
-      resource_group: MyResourceGroup
-      name: myNetworkSecurityGroup
+      resource_group: MyResourceGroup2
+      name: MyNetworkSecurityGroup2
       rules:
         - name: SSH
           protocol: Tcp
@@ -39,23 +39,23 @@
           direction: Inbound
   - name: Create virtual network interface card
     azure_rm_networkinterface:
-      resource_group: MyResourceGroup
-      name: myNIC
-      virtual_network: myVnet
-      subnet: mySubnet
-      public_ip_name: myPublicIP
-      security_group: myNetworkSecurityGroup
+      resource_group: MyResourceGroup2
+      name: MyNIC2
+      virtual_network: MyVnet2
+      subnet: MySubnet2
+      public_ip_name: MyPublicIP
+      security_group: MyNetworkSecurityGroup
   - name: Create VM
     azure_rm_virtualmachine:
       resource_group: MyResourceGroup
-      name: myVM
+      name: MyVM2
       vm_size: Standard_DS1_v2
-      admin_username: azureuser
+      admin_username: toburke
       ssh_password_enabled: false
       ssh_public_keys:
         - path: /home/azureuser/.ssh/authorized_keys
-          key_data: <your-key-data>
-      network_interfaces: myNIC
+          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD4Yj7/oMh+IHAdvlq+puLa5rY+CSdxAfEszYgh7J5JWW0sWTWaw9gZc9MBJ1W+2e406fjqGD+yy4MTUCxTtRGwJ19oZQ174NEUWkMkB6WAql/D8f0K2y8f38wgkp5llI7EcHAzWSxwE/nG1yPob+e57ZrnxbHwOKnld/DZDhXjKX+kSWrWNFRMlQU84zDN5teSLnj5MRSs259a888C6ubTLKrsdwq2Y1eCWk5xijhHDMuMNgSadMAOHACCmcBJ47hU0LPzhuhloGDkhOyGSU9M7WUlnlaKUY4Y294dGJwGOvt6iApCc8JDWXiBWy7UFlqWIgovWEnf1XIozmgxtrLV toburke@toburke.remote.csb
+      network_interfaces: MyNIC2
       image:
         offer: RHEL
         publisher: RedHat
